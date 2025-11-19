@@ -2,6 +2,8 @@ import express from "express";
 import blogController from "../controllers/blog.controllers.js";
 import userControllers from "../controllers/user.controllers.js";
 import { validateUser } from "../middlewares/validation.middlewares.js";
+import upload from "../config/multer.config.js";
+import fileController from "../controllers/file.controller.js";
 
 const router = express.Router();
 // Blog Routes
@@ -14,5 +16,7 @@ router.delete("/blog/:id", validateUser, blogController.deleteBlogById);
 // User Routes
 router.post("/register", userControllers.userRegister);
 router.post("/login", userControllers.userLogin);
+
+router.post("/uploads", upload.single("filename"), fileController.uploadFile);
 
 export default router;
